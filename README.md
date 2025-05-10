@@ -1,5 +1,5 @@
 -- CONFIGURAÇÃO
-local keyValida = "minhachave123"
+local keyValida = "mecsaultpainel"
 local webhook = "https://discordapp.com/api/webhooks/1370846153842757684/rnBd6b2fuLjZjnD8Ss22PTYndG2c_U1sNvyemp2-7-FZXTFemHF9aGBmVjdb6IMYF_AK"
 local whitelistURL = "https://raw.githubusercontent.com/sillageeee/whitelistttttt/main/README.md"
 
