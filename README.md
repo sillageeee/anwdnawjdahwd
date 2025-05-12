@@ -8,7 +8,7 @@ local function sendWebhook(username)
 
     local data = {
         ["embeds"] = { {
-            ["title"] = "Player na Whitelist",
+            ["title"] = "Player verificado na whitelist!",
             ["description"] = "Um jogador entrou no script!",
             ["fields"] = {
                 {
