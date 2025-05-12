@@ -1,31 +1,25 @@
 -- CONFIGURAÇÃO
-local keyValida = "mecsaultpainel"
-local webhook = "https://discordapp.com/api/webhooks/1370846153842757684/rnBd6b2fuLjZjnD8Ss22PTYndG2c_U1sNvyemp2-7-FZXTFemHF9aGBmVjdb6IMYF_AK"
+local webhook = "https://discordapp.com/api/webhooks/1371329827159806093/XsR_E8Rkdkm6ZYuC1G4j3KObYevMQFHaY0ll18hVOYoGEUhzFRle9Xums4JWNQp7P1QF"
 local whitelistURL = "https://raw.githubusercontent.com/sillageeee/whitelistttttt/main/README.md"
 
 -- FUNÇÃO PARA ENVIAR WEBHOOK COM EMBED
-local function sendWebhook(username, keyUsed)
+local function sendWebhook(username)
     local HttpService = game:GetService("HttpService")
 
     local data = {
         ["embeds"] = { {
-            ["title"] = "Key utilizada no script",
-            ["description"] = "Um player utilizou uma key do script!",
+            ["title"] = "Player na Whitelist",
+            ["description"] = "Um jogador entrou no script!",
             ["fields"] = {
                 {
                     ["name"] = "Player User",
                     ["value"] = username,
                     ["inline"] = true
-                },
-                {
-                    ["name"] = "Key Utilizada",
-                    ["value"] = keyUsed,
-                    ["inline"] = true
                 }
             },
             ["color"] = 65280
         }},
-        ["username"] = "KeySystem Logger"
+        ["username"] = "Whitelist Logger"
     }
 
     local headers = { ["Content-Type"] = "application/json" }
@@ -71,34 +65,25 @@ local inputBox = Instance.new("TextBox")
 inputBox.Parent = screenGui
 inputBox.Size = UDim2.new(0, 400, 0, 50)
 inputBox.Position = UDim2.new(0.5, -200, 0.5, -25)
-inputBox.PlaceholderText = "Digite a chave..."
+inputBox.PlaceholderText = "Verificando sua whitelist..."
 inputBox.Text = ""
 inputBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 inputBox.TextSize = 20
+inputBox.ClearTextOnFocus = false
 
-inputBox.FocusLost:Connect(function()
-    local enteredKey = inputBox.Text
+-- Verificação se o jogador está na whitelist
+if not isPlayerWhitelisted(LocalPlayer.Name) then
+    inputBox.Text = "❌ Você não está na whitelist!"
+    task.wait(2)
+    inputBox.Text = ""
+    return
+end
 
-    if not isPlayerWhitelisted(LocalPlayer.Name) then
-        inputBox.Text = "❌ Você não está na whitelist!"
-        task.wait(1.5)
-        inputBox.Text = ""
-        return
-    end
+-- Se o jogador estiver na whitelist, libera o script
+inputBox.Text = "✔️ Você está na whitelist!"
+sendWebhook(LocalPlayer.Name)
+task.wait(1)
 
-    if enteredKey == keyValida then
-        inputBox.Text = "✔️ Key válida!"
-        sendWebhook(LocalPlayer.Name, enteredKey)
-        task.wait(1)
-        inputBox:Destroy()
-
-        -- 🔓 Script principal liberado
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/sillageeee/awdnawdadad/refs/heads/main/sla.lua"))()
-
-    else
-        inputBox.Text = "❌ Key inválida"
-        task.wait(1.5)
-        inputBox.Text = ""
-    end
-end)
+-- 🔓 Script principal liberado
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sillageeee/awdnawdadad/refs/heads/main/sla.lua"))()
